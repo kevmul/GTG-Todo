@@ -1,0 +1,22 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "test:spec": "vitest"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^3.2.0",
+        "@vue/test-utils": "^2.2.1",
+        "axios": "^1.1.2",
+        "jsdom": "^20.0.2",
+        "laravel-vite-plugin": "^0.6.0",
+        "lodash": "^4.17.19",
+        "postcss": "^8.1.14",
+        "vite": "^3.0.0",
+        "vitest": "^0.24.5"
+    },
+    "dependencies": {
+        "vue": "^3.2.41"
+    }
+}
