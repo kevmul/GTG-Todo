@@ -14,7 +14,7 @@ class TodoTest extends TestCase
     /** @test */
     public function a_todo_can_be_created()
     {
-        $response = $this->post('/todo', [
+        $response = $this->post(route('todo.store'), [
             'title' => 'My First TODO!'
         ]);
 
@@ -24,10 +24,10 @@ class TodoTest extends TestCase
     /** @test */
     public function two_todos_can_be_created()
     {
-        $this->post('/todo', [
+        $this->post(route('todo.store'), [
             'title' => 'My First TODO!'
         ]);
-        $this->post('/todo', [
+        $this->post(route('todo.store'), [
             'title' => 'My Second Todo!'
         ]);
 
@@ -41,7 +41,7 @@ class TodoTest extends TestCase
     {
         Todo::factory()->create(['title' => 'My First Todo!']);
 
-        $response = $this->patch('todo/1/mark/completed');
+        $response = $this->patch(route('todo.complete', ['todo_id' => 1]));
         $response->assertOk();
 
         tap(Todo::first(), function ($todo) {
@@ -71,7 +71,7 @@ class TodoTest extends TestCase
      */
     public function it_can_validate_a_todo($field, $value, $should_succeed, $error_message)
     {
-        $response = $this->post('/todo', [
+        $response = $this->post(route('todo.store'), [
             $field => $value
         ]);
 
