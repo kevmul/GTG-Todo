@@ -1,5 +1,7 @@
 <p align="center">
-    ![GettingToGreen Logo](resources/images/GTG_Logo.png)
+    <a href="" target="_blank">
+        <img src="https://github.com/kevmul/GTG-Todo/blob/fix-readme/resources/images/GTG_Logo--Horizontal.png" alt="GettingToGreen">
+    </a>
 </p>
 
 ## Our Project
