@@ -14,3 +14,15 @@ If you wish to follow along, the episodes created as Tags and uploaded after the
 
 - [GettingToGreen](https://www.youtube.com/@gettingtogreen5430)
 - [Watch the Playlist](https://www.youtube.com/watch?v=FrZrsrY50XQ&list=PL-Y-yLq0TjmasH3jcjmDrTUySsXuLVE0g)
+
+## Documentation
+
+#### PHP
+- [Laravel](https://laravel.com/docs/9.x)
+- [PHPUnit](https://phpunit.readthedocs.io/en/9.5/)
+
+#### JS
+- [Vue 3](https://vuejs.org/api/)
+- [Vitest](https://vitest.dev/api/)
+- [Vue Test Utils](https://test-utils.vuejs.org/api/)
+- [Cypress IO](https://docs.cypress.io/api/table-of-contents)
