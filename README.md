@@ -1,6 +1,6 @@
 <p align="center">
     <a href="" target="_blank">
-        <img src="https://github.com/kevmul/GTG-Todo/blob/fix-readme/resources/images/GTG_Logo--Horizontal.png" alt="GettingToGreen" height="150">
+        <img src="https://github.com/kevmul/GTG-Todo/blob/main/resources/images/GTG_Logo--Horizontal.png" alt="GettingToGreen" height="150">
     </a>
 </p>
 
