@@ -58,10 +58,10 @@ class TodoTest extends TestCase
         return [
             // field, value, should_succeed, error_message
             ['title', 'My First TODO!', true, 'Todo with title should succeed.'],
-            // ['title', '', false, 'The TODO title is required.'],
-            // ['title', 'ab', false, 'The title must be at least 3 characters.'],
-            // ['title', implode('', array_fill(0, 100, 'a')), true, 'Title should allow for 100 chars.'],
-            // ['title', implode('', array_fill(0, 101, 'a')), false, 'The title cannot exceed 100 characters.'],
+            ['title', '', false, 'The TODO title is required.'],
+            ['title', 'ab', false, 'The title must be at least 3 characters.'],
+            ['title', implode('', array_fill(0, 100, 'a')), true, 'Title should allow for 100 chars.'],
+            ['title', implode('', array_fill(0, 101, 'a')), false, 'The title cannot exceed 100 characters.'],
         ];
     }
 
@@ -78,9 +78,6 @@ class TodoTest extends TestCase
         if ($should_succeed) {
             $this->assertMissingValidationError($response, $field, $error_message);
         } else {
-            // $response->assertStatus(302);
-            // $response->assertSessionHasErrors($field);
-            // $this->assertEquals($error_message, session('errors')->get($field)[0]);
             $this->assertHasValidationError($response, $field, $error_message);
         }
     }
