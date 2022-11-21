@@ -14,7 +14,7 @@ class TodoTest extends TestCase
     /** @test */
     public function a_todo_can_be_created()
     {
-        $response = $this->post('/todo', [
+        $response = $this->post(route('todo.store'), [
             'title' => 'My First TODO!'
         ]);
 
@@ -24,10 +24,10 @@ class TodoTest extends TestCase
     /** @test */
     public function two_todos_can_be_created()
     {
-        $this->post('/todo', [
+        $this->post(route('todo.store'), [
             'title' => 'My First TODO!'
         ]);
-        $this->post('/todo', [
+        $this->post(route('todo.store'), [
             'title' => 'My Second Todo!'
         ]);
 
@@ -41,7 +41,7 @@ class TodoTest extends TestCase
     {
         Todo::factory()->create(['title' => 'My First Todo!']);
 
-        $response = $this->patch('todo/1/mark/completed');
+        $response = $this->patch(route('todo.complete', ['todo_id' => 1]));
         $response->assertOk();
 
         tap(Todo::first(), function ($todo) {
@@ -58,7 +58,7 @@ class TodoTest extends TestCase
         return [
             // field, value, should_succeed, error_message
             ['title', 'My First TODO!', true, 'Todo with title should succeed.'],
-            ['title', '', false, 'The title is required.'],
+            ['title', '', false, 'The TODO title is required.'],
             ['title', 'ab', false, 'The title must be at least 3 characters.'],
             ['title', implode('', array_fill(0, 100, 'a')), true, 'Title should allow for 100 chars.'],
             ['title', implode('', array_fill(0, 101, 'a')), false, 'The title cannot exceed 100 characters.'],
@@ -71,16 +71,14 @@ class TodoTest extends TestCase
      */
     public function it_can_validate_a_todo($field, $value, $should_succeed, $error_message)
     {
-        $response = $this->post('/todo', [
+        $response = $this->post(route('todo.store'), [
             $field => $value
         ]);
 
         if ($should_succeed) {
-            $response->assertStatus(201);
+            $this->assertMissingValidationError($response, $field, $error_message);
         } else {
-            $response->assertStatus(302);
-            $response->assertSessionHasErrors($field);
-            $this->assertEquals($error_message, session('errors')->get($field)[0]);
+            $this->assertHasValidationError($response, $field, $error_message);
         }
     }
 }
