@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="" target="_blank">
+    <a href="https://www.youtube.com/@gettingtogreen" target="_blank">
         <img src="https://github.com/kevmul/GTG-Todo/blob/main/resources/images/GTG_Logo--Horizontal.png" alt="GettingToGreen" height="150">
     </a>
 </p>
