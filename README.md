@@ -12,7 +12,7 @@ We will be discussing best practices along the way and sharing some tips I have 
 
 If you wish to follow along, the episodes created as Tags and uploaded after the end of the video.
 
-- [GettingToGreen](https://www.youtube.com/@gettingtogreen5430)
+- [GettingToGreen](https://www.youtube.com/@gettingtogreen)
 - [Watch the Playlist](https://www.youtube.com/watch?v=FrZrsrY50XQ&list=PL-Y-yLq0TjmasH3jcjmDrTUySsXuLVE0g)
 
 ## Documentation
