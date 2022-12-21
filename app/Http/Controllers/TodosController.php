@@ -8,6 +8,12 @@ use App\Http\Requests\TodoRequest;
 
 class TodosController extends Controller
 {
+    public function index()
+    {
+        return response()->json([
+            'todos' => Todo::all()
+        ]);
+    }
     public function store(TodoRequest $request)
     {
         $todo = Todo::create([
