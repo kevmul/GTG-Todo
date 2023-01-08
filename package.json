@@ -18,6 +18,9 @@
         "vitest": "^0.24.5"
     },
     "dependencies": {
+        "@pinia/testing": "^0.0.14",
+        "luxon": "^3.2.1",
+        "pinia": "^2.0.28",
         "vue": "^3.2.41",
         "vue-router": "^4.1.6"
     }
