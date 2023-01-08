@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import axios from "axios";
-import { ref } from "vue";
+import { useTodoStore } from "../stores/TodoStore";
+import { onBeforeMount } from "vue";
 
-const list = ref([]);
+const todoStore = useTodoStore();
 
-const fetch = () => {
-    axios.get("todos").then((response) => {
-        list.value = response.data.todos;
-    });
-};
+onBeforeMount(() => {
+    todoStore.fetch();
+});
 </script>
 
 <template>
@@ -16,13 +14,12 @@ const fetch = () => {
     <div>
         <ul>
             <li
-                v-for="todo in list"
+                v-for="todo in todoStore.todos"
                 :key="todo.id"
                 data-testid="todo-list-item"
             >
                 {{ todo.title }}
             </li>
         </ul>
-        <button @click="fetch">Fetch TODOs</button>
     </div>
 </template>

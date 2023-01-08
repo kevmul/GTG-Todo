@@ -1,8 +1,12 @@
-import { mount } from "@vue/test-utils";
+import { createTestingPinia } from "@pinia/testing";
+import { shallowMount } from "@vue/test-utils";
+import { useTodoStore } from "../../stores/TodoStore";
 import axios from "axios";
-import sinon from "sinon";
 import HomePage from "../HomePage.vue";
 
+let store;
+let wrapper;
+let pinia;
 const expectedResponse = {
     data: {
         todos: [
@@ -11,13 +15,28 @@ const expectedResponse = {
         ],
     },
 };
+vi.mock("axios");
 
 describe("HomePage", () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+        axios.get.mockResolvedValue(expectedResponse);
+        pinia = createTestingPinia({ stubActions: false });
+        wrapper = shallowMount(HomePage, {
+            global: {
+                plugins: [pinia],
+            },
+        });
+        store = useTodoStore();
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+        wrapper.unmount();
+        vi.resetAllMocks();
+    });
+
     it("can fetch all the todos", async () => {
-        sinon.stub(axios, "get").resolves(expectedResponse);
-        const wrapper = mount(HomePage);
-        await wrapper.get("button").trigger("click");
-        await wrapper.vm.$nextTick();
         const todoList = wrapper.findAll('[data-testid="todo-list-item"]');
 
         expect(todoList).toHaveLength(2);
