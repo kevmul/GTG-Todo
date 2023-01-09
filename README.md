@@ -23,6 +23,11 @@ If you wish to follow along, the episodes created as Tags and uploaded after the
 
 #### JS
 - [Vue 3](https://vuejs.org/api/)
+- [Axios](https://axios-http.com/docs/intro)
+- [Pinia](https://pinia.vuejs.org/api/modules/pinia.html)
+  - [@pinia/testing](https://pinia.vuejs.org/api/modules/pinia_testing.html)
+- [Vue Router](https://router.vuejs.org/api/)
+
 - [Vitest](https://vitest.dev/api/)
 - [Vue Test Utils](https://test-utils.vuejs.org/api/)
 - [Cypress IO](https://docs.cypress.io/api/table-of-contents)
