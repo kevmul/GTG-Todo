@@ -23,10 +23,19 @@ export const useTodoStore = defineStore("todos", () => {
         }
     };
 
+    const updateStatus = (id) => {
+        const todo = todos.value.find((todo) => todo.id === id);
+
+        if (todo.status === "new") return (todo.status = "in-progress");
+        if (todo.status === "in-progress") return (todo.status = "complete");
+        if (todo.status === "complete") return (todo.status = "new");
+    };
+
     return {
         todos,
         lastFetch,
         list,
         fetch,
+        updateStatus,
     };
 });
