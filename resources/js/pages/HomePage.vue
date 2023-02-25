@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useTodoStore } from "../stores/TodoStore";
 import { onBeforeMount } from "vue";
+import Todo from "../components/Todo.vue";
 
 const todoStore = useTodoStore();
 
@@ -11,15 +12,13 @@ onBeforeMount(() => {
 
 <template>
     <h1>TODOs!</h1>
-    <div>
-        <ul>
-            <li
-                v-for="todo in todoStore.todos"
-                :key="todo.id"
-                data-testid="todo-list-item"
-            >
-                {{ todo.title }}
-            </li>
-        </ul>
+    <div class="space-y-4">
+        <div
+            v-for="todo in todoStore.todos"
+            :key="todo.id"
+            data-testid="todo-list-item"
+        >
+            <Todo :todo="todo" />
+        </div>
     </div>
 </template>
