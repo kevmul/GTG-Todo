@@ -11,26 +11,30 @@ class TodosController extends Controller
     public function index()
     {
         return response()->json([
-            'todos' => Todo::all()
+            'todos' => Todo::orderByDesc('id')->get()
         ]);
     }
+
     public function store(TodoRequest $request)
     {
         $todo = Todo::create([
-            'title' => $request->title
+            'title' => 'New Todo'
         ]);
-        return $todo;
+
+        return response()->json([
+            'todo' => $todo
+        ]);
     }
 
-    public function update(Request $request, $todo_id)
+    public function update(TodoRequest $request, Todo $todo)
     {
-        $todo = Todo::find($todo_id);
-
         $todo->update([
-            'complete' => $request->completed
+            'title' => $request->title
         ]);
 
-        return response()->json($todo);
+        return response()->json([
+            'message' => 'Success'
+        ], 201);
     }
 
     public function complete($todo_id)

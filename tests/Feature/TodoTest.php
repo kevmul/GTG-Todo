@@ -11,29 +11,57 @@ class TodoTest extends TestCase
 {
     use RefreshDatabase;
 
+    /*|========================================================
+     | TESTS
+    |========================================================*/
+
+    /*|--------------------------------------------------------
+     | Creating Todo
+    |--------------------------------------------------------*/
+
     /** @test */
     public function a_todo_can_be_created()
     {
-        $response = $this->post(route('todo.store'), [
-            'title' => 'My First TODO!'
-        ]);
+        $response = $this->post(route('todo.store'));
 
-        $this->assertEquals('My First TODO!', $response['title']);
+        $this->assertEquals('New Todo', $response['title']);
     }
 
-    /** @test */
-    public function two_todos_can_be_created()
+    /*|--------------------------------------------------------
+     | Editing Todo
+    |--------------------------------------------------------*/
+
+    /**
+     * provider
+     */
+    public function dataProviderForTitleValidation()
     {
-        $this->post(route('todo.store'), [
-            'title' => 'My First TODO!'
-        ]);
-        $this->post(route('todo.store'), [
-            'title' => 'My Second Todo!'
+        return [
+            // field, value, should_succeed, error_message
+            ['title', 'My First TODO!', true, 'Todo with title should succeed.'],
+            ['title', '', false, 'The title is required.'],
+            ['title', 'ab', false, 'The title must be at least 3 characters.'],
+            ['title', implode('', array_fill(0, 100, 'a')), true, 'Title should allow for 100 chars.'],
+            ['title', implode('', array_fill(0, 101, 'a')), false, 'The title cannot exceed 100 characters.'],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider dataProviderForTitleValidation
+     */
+    public function it_can_validate_a_todo($field, $value, $should_succeed, $error_message)
+    {
+        Todo::factory(1)->create(['title' => 'New Todo']);
+        $response = $this->patch(route('todo.update', 1), [
+            $field => $value
         ]);
 
-        tap(Todo::orderBy('id', 'desc')->first(), function ($todo) {
-            $this->assertEquals('My Second Todo!', $todo->title);
-        });
+        if ($should_succeed) {
+            $this->assertMissingValidationError($response, $field, $error_message);
+        } else {
+            $this->assertHasValidationError($response, $field, $error_message);
+        }
     }
 
     /** @test */
@@ -50,35 +78,24 @@ class TodoTest extends TestCase
         });
     }
 
-    /**
-     * provider
-     */
-    public function dataProviderForTitleValidation()
+    /*|--------------------------------------------------------
+     | Viewing Todo
+    |--------------------------------------------------------*/
+
+    /** @test */
+    public function it_gets_todos_in_desc_order()
     {
-        return [
-            // field, value, should_succeed, error_message
-            ['title', 'My First TODO!', true, 'Todo with title should succeed.'],
-            ['title', '', false, 'The TODO title is required.'],
-            ['title', 'ab', false, 'The title must be at least 3 characters.'],
-            ['title', implode('', array_fill(0, 100, 'a')), true, 'Title should allow for 100 chars.'],
-            ['title', implode('', array_fill(0, 101, 'a')), false, 'The title cannot exceed 100 characters.'],
-        ];
+        Todo::factory(3)->create();
+
+        $response = $this->getJson('/todos')->getContent();
+        $todos = json_decode($response)->todos;
+
+        $this->assertEquals(3, $todos[0]->id);
+        $this->assertEquals(2, $todos[1]->id);
+        $this->assertEquals(1, $todos[2]->id);
     }
 
-    /**
-     * @test
-     * @dataProvider dataProviderForTitleValidation
-     */
-    public function it_can_validate_a_todo($field, $value, $should_succeed, $error_message)
-    {
-        $response = $this->post(route('todo.store'), [
-            $field => $value
-        ]);
-
-        if ($should_succeed) {
-            $this->assertMissingValidationError($response, $field, $error_message);
-        } else {
-            $this->assertHasValidationError($response, $field, $error_message);
-        }
-    }
+    /*|--------------------------------------------------------
+     | Deleting Todo
+    |--------------------------------------------------------*/
 }

@@ -23,9 +23,13 @@ class TodoRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'title' => 'required|min:3|max:100'
-        ];
+        $rules = collect();
+        if ($this->method() === "PATCH") {
+            $rules->push([
+                'title' => 'required|min:3|max:100'
+            ]);
+        }
+        return $rules->toArray()[0] ?? $rules->toArray();
     }
 
     public function messages()

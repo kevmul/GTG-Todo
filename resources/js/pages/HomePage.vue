@@ -20,5 +20,26 @@ onBeforeMount(() => {
         >
             <Todo :todo="todo" />
         </div>
+        <button
+            type="button"
+            class="w-8 h-8 fixed bottom-4 right-4 bg-slate-100 text-slate-800 shadow rounded"
+            data-testid="create-todo-btn"
+            @click="todoStore.create"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="{1.5}"
+                stroke="currentColor"
+                className="w-6 h-6"
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 4.5v15m7.5-7.5h-15"
+                />
+            </svg>
+        </button>
     </div>
 </template>
