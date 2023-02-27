@@ -23,6 +23,14 @@ export const useTodoStore = defineStore("todos", () => {
         }
     };
 
+    const create = async () => {
+        const response = await axios.post("/todo");
+        console.log(response);
+
+        todos.value.unshift(response.data?.todo);
+        console.log(todos.value);
+    };
+
     const updateStatus = (id) => {
         const todo = todos.value.find((todo) => todo.id === id);
 
@@ -36,6 +44,7 @@ export const useTodoStore = defineStore("todos", () => {
         lastFetch,
         list,
         fetch,
+        create,
         updateStatus,
     };
 });

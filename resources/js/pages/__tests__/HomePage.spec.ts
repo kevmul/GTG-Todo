@@ -21,6 +21,7 @@ describe("HomePage", () => {
     beforeEach(() => {
         vi.useFakeTimers();
         axios.get.mockResolvedValue(expectedResponse);
+        // axios.post.mockResolvedValue({ message: "Success" });
         pinia = createTestingPinia({ stubActions: false });
         wrapper = shallowMount(HomePage, {
             global: {
@@ -40,5 +41,11 @@ describe("HomePage", () => {
         const todoList = wrapper.findAll('[data-testid="todo-list-item"]');
 
         expect(todoList).toHaveLength(2);
+    });
+
+    it("can create a new todo", async () => {
+        wrapper.find('[data-testid="create-todo-btn"]').trigger("click");
+
+        expect(axios.post).toBeCalledTimes(1);
     });
 });

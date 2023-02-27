@@ -7,26 +7,35 @@ vi.mock("axios");
 const expectedResponse = {
     data: {
         todos: [
-            { id: 1, title: "Neque repudiandae." },
-            { id: 2, title: "Neque repudiandae." },
+            { id: 1, title: "First Todo" },
+            { id: 2, title: "Second Todo" },
         ],
     },
 };
 
+let store;
 describe("TodoStore", () => {
     beforeEach(() => {
         setActivePinia(createPinia());
         vi.useFakeTimers();
         axios.get.mockResolvedValue(expectedResponse);
+        axios.post.mockResolvedValue({
+            data: {
+                todo: { id: 3, title: "New Todo" },
+            },
+        });
     });
 
     afterEach(() => {
         vi.useRealTimers();
+        vi.resetAllMocks();
     });
 
     describe("actions", () => {
+        beforeEach(() => {
+            store = useTodoStore();
+        });
         test("fetch can only be called 5 seconds after previous call", async () => {
-            const store = useTodoStore();
             await store.fetch();
             expect(axios.get).toBeCalledTimes(1);
 
@@ -39,6 +48,15 @@ describe("TodoStore", () => {
             vi.advanceTimersByTime(4000);
             await store.fetch();
             expect(axios.get).toBeCalledTimes(2);
+        });
+
+        it("can create a new todo and prepend to the list", async () => {
+            await store.fetch();
+            expect(store.todos.length).toBe(2);
+            expect(store.todos[0].title).toBe("First Todo");
+            await store.create();
+            expect(store.todos.length).toBe(3);
+            expect(store.todos[0].title).toBe("New Todo");
         });
     });
 });
