@@ -2,8 +2,9 @@
 import TodoIcon from "./TodoIcon.vue";
 import { TodoStatus } from "../types/todo";
 import { useTodoStore } from "../stores/TodoStore";
+import { onBeforeMount, ref } from "vue";
 
-const { updateStatus } = useTodoStore();
+const { updateStatus, updateTitle } = useTodoStore();
 
 const props = defineProps<{
     id: string;
@@ -11,6 +12,12 @@ const props = defineProps<{
     status: TodoStatus;
     title: string;
 }>();
+
+const title = ref("");
+
+onBeforeMount(() => {
+    title.value = props.title;
+});
 </script>
 
 <template>
@@ -23,8 +30,10 @@ const props = defineProps<{
         />
         <input
             class="text-3xl font-bold text-ellipsis flex w-full"
+            data-testid="todo-title-input"
             type="text"
-            v-model="props.title"
+            v-model="title"
+            @blur="updateTitle(props.id, title)"
         />
         <svg
             xmlns="http://www.w3.org/2000/svg"

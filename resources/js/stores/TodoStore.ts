@@ -39,6 +39,12 @@ export const useTodoStore = defineStore("todos", () => {
         if (todo.status === "complete") return (todo.status = "new");
     };
 
+    const updateTitle = async (id, title) => {
+        const response = await axios.patch(`/todo/${id}`, { title });
+        todos.value.find((todo) => todo.id === id).title = title;
+        return response;
+    };
+
     return {
         todos,
         lastFetch,
@@ -46,5 +52,6 @@ export const useTodoStore = defineStore("todos", () => {
         fetch,
         create,
         updateStatus,
+        updateTitle,
     };
 });
