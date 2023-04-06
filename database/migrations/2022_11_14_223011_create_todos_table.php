@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('is_important')->default(false);
             $table->string('status')->default('new');
             $table->timestamp('completed_at')->nullable();
+            $table->timestamp('archived_at')->nullable();
             $table->timestamps();
         });
     }

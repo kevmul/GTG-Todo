@@ -21,4 +21,16 @@ class TodoFactory extends Factory
             'title' => $this->faker->sentence(3),
         ];
     }
+
+    /**
+     * Indicate that the todo is archived.
+     */
+    public function archived(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'archived_at' => now(),
+            ];
+        });
+    }
 }

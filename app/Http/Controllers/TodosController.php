@@ -11,7 +11,7 @@ class TodosController extends Controller
     public function index()
     {
         return response()->json([
-            'todos' => Todo::orderByDesc('id')->get()
+            'todos' => Todo::archived()->orderByDesc('id')->get()
         ]);
     }
 
@@ -44,5 +44,13 @@ class TodosController extends Controller
         $todo->markComplete();
 
         return response()->json($todo);
+    }
+
+    public function archive(Todo $todo)
+    {
+        $todo->archive();
+        return response()->json([
+            'message' => `{$todo->title} was archived.`
+        ]);
     }
 }
