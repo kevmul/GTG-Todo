@@ -17,4 +17,13 @@ class TodoTest extends TestCase
 
         $this->assertTrue($todo->isCompleted);
     }
+
+    /** @test */
+    public function a_todo_can_be_archived()
+    {
+        $todo = Todo::factory()->make();
+        $this->assertNull($todo->archived_at);
+        $todo->archive();
+        $this->assertNotNull($todo->archived_at);
+    }
 }

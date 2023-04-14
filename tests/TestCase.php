@@ -27,4 +27,6 @@ abstract class TestCase extends BaseTestCase
             $this->assertEquals($error_message, session('errors')->get($field)[0]);
         }
     }
+
+
 }

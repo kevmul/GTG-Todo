@@ -3,8 +3,9 @@ import TodoIcon from "./TodoIcon.vue";
 import { TodoStatus } from "../types/todo";
 import { useTodoStore } from "../stores/TodoStore";
 import { onBeforeMount, ref } from "vue";
+import Flyout from "./Flyout.vue";
 
-const { updateStatus, updateTitle } = useTodoStore();
+const { updateStatus, updateTitle, archive } = useTodoStore();
 
 const props = defineProps<{
     id: string;
@@ -15,6 +16,8 @@ const props = defineProps<{
 
 const title = ref("");
 
+const showActions = ref(false);
+
 onBeforeMount(() => {
     title.value = props.title;
 });
@@ -22,6 +25,16 @@ onBeforeMount(() => {
 
 <template>
     <div class="flex border-b-2 border-black space-x-4 items-center">
+        <span class="relative">
+            <div class="cursor-pointer" @click="showActions = true">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                </svg>
+            </div>
+            <Flyout v-model:is-open="showActions">
+                <button class="px-4 hover:bg-gray-200 w-full" @click="archive(props.id)">Archive</button>
+            </Flyout>
+        </span>
         <TodoIcon
             class="cursor-pointer"
             :isImportant="false"

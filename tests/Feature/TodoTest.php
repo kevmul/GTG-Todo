@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Todo;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TodoTest extends TestCase
@@ -95,7 +94,31 @@ class TodoTest extends TestCase
         $this->assertEquals(1, $todos[2]->id);
     }
 
+    /** @test */
+    public function archived_todos_do_not_show_on_index()
+    {
+        $todo1 = Todo::factory()->create();
+        $todo2 = Todo::factory()->archived()->create();
+        $todo3 = Todo::factory()->create();
+
+        $response = $this->getJson('/todos')->getContent();
+        $todos = collect(json_decode($response)->todos);
+
+        $this->assertTrue($todos->contains('id', $todo1->id));
+        $this->assertTrue($todos->contains('id', $todo3->id));
+        $this->assertFalse($todos->contains('id', $todo2->id));
+    }
+
     /*|--------------------------------------------------------
      | Deleting Todo
     |--------------------------------------------------------*/
+
+    /** @test */
+    public function it_can_be_archived()
+    {
+        $todo = Todo::factory()->create();
+        $this->assertNull($todo->fresh()->archived_at);
+        $response = $this->delete(route('todo.archive', ['todo' => $todo->id]));
+        $this->assertNotNull($todo->fresh()->archived_at);
+    }
 }
