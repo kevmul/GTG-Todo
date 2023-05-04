@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\TodosController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TodosController;
+use App\Http\Controllers\SubTaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,5 @@ Route::post('/todo', [TodosController::class, 'store'])->name('todo.store');
 Route::patch('/todo/{todo_id}/mark/completed', [TodosController::class, 'complete'])->name('todo.complete');
 Route::patch('/todo/{todo}', [TodosController::class, 'update'])->name('todo.update');
 Route::delete('/todo/{todo}', [TodosController::class, 'archive'])->name('todo.archive');
+
+Route::post('/subtask/{type}/{type_id}',  [SubTaskController::class, 'store'])->name('subtask.store');

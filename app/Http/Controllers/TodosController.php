@@ -11,7 +11,7 @@ class TodosController extends Controller
     public function index()
     {
         return response()->json([
-            'todos' => Todo::archived()->orderByDesc('id')->get()
+            'todos' => Todo::orderByDesc('id')->with('subtasks', 'subtasks.subtasks', 'subtasks.subtasks.subtasks')->get()
         ]);
     }
 

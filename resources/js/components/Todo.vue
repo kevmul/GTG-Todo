@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Todo } from "../types/todo";
+import SubTask from "./SubTask.vue";
 import TodoTitle from "./TodoTitle.vue";
 
 const props = defineProps<{
@@ -15,5 +16,6 @@ const props = defineProps<{
             :title="props.todo.title"
             :status="props.todo.status"
         />
+        <SubTask :tasks="props.todo.subtasks"/>
     </div>
 </template>

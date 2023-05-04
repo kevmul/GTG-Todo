@@ -2,37 +2,23 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\ArchiveScope;
 use App\Traits\Taskable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Todo extends Model
+class SubTask extends Model
 {
     use HasFactory, Taskable;
 
-    protected $fillable = ['title', 'completed_at'];
+    protected $fillable = ['body', 'is_task'];
 
-    protected static function booted(): void
-    {
-        static::addGlobalScope(new ArchiveScope);
-    }
+    protected $casts = ['is_task' => 'boolean'];
 
     /*|========================================================
      | Methods
     |========================================================*/
-
-    public function markComplete()
-    {
-        $this->completed_at = now();
-        $this->update();
-    }
-
-    public function archive()
-    {
-        $this->archived_at = now();
-        $this->update();
-    }
 
     /*|========================================================
      | Relationships
@@ -42,18 +28,7 @@ class Todo extends Model
      | Query Scopes
     |========================================================*/
 
-    public function scopeArchived($query): void
-    {
-        $query->withoutGlobalScope(ArchiveScope::class)
-            ->whereNotNull('archived_at');
-    }
-
     /*|========================================================
      | Attributes
     |========================================================*/
-
-    public function getIsCompletedAttribute()
-    {
-        return !!$this->completed_at;
-    }
 }
