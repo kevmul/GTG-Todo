@@ -11,11 +11,19 @@ class TodoTest extends TestCase
     public function a_todo_knows_if_it_is_completed()
     {
         $todo = Todo::factory()->make();
-        $this->assertFalse($todo->isCompleted, 'Todo isCompleted should be False.');
+        $this->assertEquals($todo->progress, 'new');
+        $this->assertFalse($todo->isComplete, 'Todo isCompleted should be False.');
 
-        $todo->markComplete();
+        collect(['new', 'in-progress', 'complete'])->each(function ($progress) use ($todo) {
+            $todo->markProgress($progress);
+            $this->assertEquals($todo->progress, $progress);
 
-        $this->assertTrue($todo->isCompleted);
+            if ($progress === 'complete') {
+                $this->assertTrue($todo->isComplete, 'Todo is not complete');
+            } else {
+                $this->assertFalse($todo->isComplete, 'Todo is complete');
+            }
+        });
     }
 
     /** @test */

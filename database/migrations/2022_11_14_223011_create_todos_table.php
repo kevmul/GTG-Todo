@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->boolean('is_important')->default(false);
-            $table->string('status')->default('new');
-            $table->timestamp('completed_at')->nullable();
+            $table->string('progress')->default('new');
             $table->timestamp('archived_at')->nullable();
             $table->timestamps();
         });

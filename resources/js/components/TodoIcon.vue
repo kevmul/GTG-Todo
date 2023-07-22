@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { TodoStatus } from "../types/todo";
+import type { TodoProgress } from "../types/todo";
 
 const props = defineProps<{
     isImportant: boolean;
-    status: TodoStatus;
+    progress: TodoProgress;
 }>();
 
 const strokeWidth = computed(() => {
@@ -42,7 +42,7 @@ const strokeWidth = computed(() => {
             stroke="black"
             class="progressLine"
             :class="{
-                visible: ['complete'].includes(props.status),
+                visible: ['complete'].includes(props.progress),
             }"
             :stroke-width="strokeWidth"
         />

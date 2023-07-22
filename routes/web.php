@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Route::get('/todos', [TodosController::class, 'index'])->name('todo.index');
 Route::post('/todo', [TodosController::class, 'store'])->name('todo.store');
-Route::patch('/todo/{todo_id}/mark/completed', [TodosController::class, 'complete'])->name('todo.complete');
+Route::patch('/todo/{todo}/mark/{progress}', [TodosController::class, 'progress'])->name('todo.progress.update');
 Route::patch('/todo/{todo}', [TodosController::class, 'update'])->name('todo.update');
 Route::delete('/todo/{todo}', [TodosController::class, 'archive'])->name('todo.archive');
 

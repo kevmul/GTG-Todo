@@ -16,7 +16,7 @@ describe("TodoTitle", () => {
             propsData: {
                 id: 1,
                 isImportant: false,
-                status: "new",
+                progress: "new",
                 title: "New Todo",
             },
         });

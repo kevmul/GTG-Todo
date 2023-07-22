@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import TodoIcon from "./TodoIcon.vue";
-import { TodoStatus } from "../types/todo";
+import { TodoProgress } from "../types/todo";
 import { useTodoStore } from "../stores/TodoStore";
 import { onBeforeMount, ref } from "vue";
 import Flyout from "./Flyout.vue";
 
-const { updateStatus, updateTitle, archive } = useTodoStore();
+const { updateProgress, updateTitle, archive } = useTodoStore();
 
 const props = defineProps<{
     id: string;
     isImportant: boolean;
-    status: TodoStatus;
+    progress: TodoProgress;
     title: string;
 }>();
 
@@ -38,8 +38,8 @@ onBeforeMount(() => {
         <TodoIcon
             class="cursor-pointer"
             :isImportant="false"
-            :status="props.status"
-            @click="updateStatus(props.id)"
+            :progress="props.progress"
+            @click="updateProgress(props.id)"
         />
         <input
             class="text-3xl font-bold text-ellipsis flex w-full"

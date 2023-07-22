@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TodoProgressRequest;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 use App\Http\Requests\TodoRequest;
@@ -37,20 +38,18 @@ class TodosController extends Controller
         ], 201);
     }
 
-    public function complete($todo_id)
+    public function progress(TodoProgressRequest $request, Todo $todo, $progress)
     {
-        $todo = Todo::find($todo_id);
+        $todo->markProgress($progress);
 
-        $todo->markComplete();
-
-        return response()->json($todo);
+        return response()->json($todo, 201);
     }
 
     public function archive(Todo $todo)
     {
         $todo->archive();
         return response()->json([
-            'message' => `{$todo->title} was archived.`
+            'message' => "{$todo->title} was archived."
         ]);
     }
 }
