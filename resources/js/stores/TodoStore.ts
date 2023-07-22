@@ -1,4 +1,4 @@
-import { DateTime } from "luxon";
+mport { DateTime } from "luxon";
 import { defineStore } from "pinia";
 import { computed, ref, Ref } from "vue";
 import axios from "axios";
@@ -32,12 +32,10 @@ export const useTodoStore = defineStore("todos", () => {
         console.log(todos.value);
     };
 
-    const updateStatus = (id) => {
+    const updateProgress = (id, progress) => {
         const todo = todos.value.find((todo) => todo.id === id);
 
-        if (todo.status === "new") return (todo.status = "in-progress");
-        if (todo.status === "in-progress") return (todo.status = "complete");
-        if (todo.status === "complete") return (todo.status = "new");
+        return todo.progress = progress;
     };
 
     const updateTitle = async (id, title) => {

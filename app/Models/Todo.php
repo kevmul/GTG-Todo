@@ -22,9 +22,9 @@ class Todo extends Model
      | Methods
     |========================================================*/
 
-    public function markComplete()
+    public function markProgress($progress)
     {
-        $this->completed_at = now();
+        $this->progress = $progress;
         $this->update();
     }
 
@@ -52,8 +52,8 @@ class Todo extends Model
      | Attributes
     |========================================================*/
 
-    public function getIsCompletedAttribute()
+    public function getIsCompleteAttribute()
     {
-        return !!$this->completed_at;
+        return $this->progress === 'complete';
     }
 }

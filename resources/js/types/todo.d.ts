@@ -1,9 +1,9 @@
-export type TodoStatus = "new" | "in-progress" | "complete";
+export type TodoProgress = "new" | "in-progress" | "complete";
 
 export interface Todo {
     id: string;
     title: string;
-    status: TodoStatus;
+    progress: TodoProgress;
     is_important: boolean;
     subtasks: TSubTask[];
     created_at: Date;

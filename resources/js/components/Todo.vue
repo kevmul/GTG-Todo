@@ -14,7 +14,7 @@ const props = defineProps<{
             :id="props.todo.id"
             :is-important="props.todo.is_important"
             :title="props.todo.title"
-            :status="props.todo.status"
+            :progress="props.todo.progress"
         />
         <SubTask :tasks="props.todo.subtasks"/>
     </div>

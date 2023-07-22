@@ -23,7 +23,7 @@ class TodoTest extends TestCase
     {
         $response = $this->post(route('todo.store'));
 
-        $this->assertEquals('New Todo', $response['title']);
+        $this->assertEquals('New Todo', $response['todo']['title']);
     }
 
     /*|--------------------------------------------------------
@@ -63,18 +63,37 @@ class TodoTest extends TestCase
         }
     }
 
-    /** @test */
-    public function a_todo_can_be_completed()
+    /**
+     * provider
+     */
+    public function dataProviderForProgressValidation()
     {
-        Todo::factory()->create(['title' => 'My First Todo!']);
+        return [
+            // $value, $should_succeed, $error_message
+            ['new', true, 'Progress not updated to "new"'],
+            ['in-progress', true, 'Progress not updated to "in-progress"'],
+            ['complete', true, 'Progress not updated to "complete"'],
+            ['invalid', false, 'Progress should be one of "new", "in-progress", or "complete"'],
+        ];
+    }
 
-        $response = $this->patch(route('todo.complete', ['todo_id' => 1]));
-        $response->assertOk();
+    /**
+     * @test
+     * @dataProvider dataProviderForProgressValidation
+     */
+    public function it_can_validate_a_todo_progress($value, $should_succeed, $error_message)
+    {
+        Todo::factory(1)->create(['title' => 'New Todo']);
+        $response = $this->patch(route('todo.progress.update', [
+            'todo' => 1,
+            'progress' => $value
+        ]));
 
-        tap(Todo::first(), function ($todo) {
-            $this->assertEquals('My First Todo!', $todo->title);
-            $this->assertTrue($todo->isCompleted, 'isCompleted is not True.');
-        });
+        if ($should_succeed) {
+            $this->assertMissingValidationError($response, 'progress', $error_message);
+        } else {
+            $this->assertHasValidationError($response, 'progress', $error_message);
+        }
     }
 
     /*|--------------------------------------------------------
