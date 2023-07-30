@@ -24,6 +24,7 @@ describe("TodoStore", () => {
                 todo: { id: 3, title: "New Todo" },
             },
         });
+        axios.patch.mockResolvedValue({data: {}})
     });
 
     afterEach(() => {
@@ -58,5 +59,24 @@ describe("TodoStore", () => {
             expect(store.todos.length).toBe(3);
             expect(store.todos[0].title).toBe("New Todo");
         });
+
+        it('can update its progress', async () => {
+            store.todos.push({id: 1, title: 'My first test', progress: 'new'});
+            expect(store.todos[0].progress).to.equal('new');
+
+            await store.updateProgress(1);
+            vi.advanceTimersByTime(499);
+            expect(store.todos[0].progress).to.equal('in-progress')
+
+            await store.updateProgress(1);
+            vi.advanceTimersByTime(499);
+            expect(store.todos[0].progress).to.equal('complete')
+
+            await store.updateProgress(1);
+            vi.advanceTimersByTime(500);
+            expect(store.todos[0].progress).to.equal('new')
+
+            expect(axios.patch).toHaveBeenCalledTimes(1)
+        })
     });
 });
