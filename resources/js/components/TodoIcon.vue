@@ -33,7 +33,7 @@ const strokeWidth = computed(() => {
             stroke="black"
             class="progressLine"
             :class="{
-                visible: ['in-progress', 'complete'].includes(props.status),
+                visible: ['in-progress', 'complete'].includes(props.progress),
             }"
             :stroke-width="strokeWidth"
         />

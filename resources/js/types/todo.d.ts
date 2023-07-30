@@ -1,4 +1,5 @@
-export type TodoProgress = "new" | "in-progress" | "complete";
+// export type TodoProgress = "new" | "in-progress" | "complete";
+export enum TodoProgress { "new", "in-progress", "complete"};
 
 export interface Todo {
     id: string;
