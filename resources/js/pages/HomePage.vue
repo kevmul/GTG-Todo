@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useTodoStore } from "../stores/TodoStore";
-import { onBeforeMount } from "vue";
-import Todo from "../components/Todo.vue";
+import { useTodoStore } from '../stores/TodoStore';
+import { onBeforeMount } from 'vue';
+import Todo from '../components/Todo.vue';
 
 const todoStore = useTodoStore();
 

@@ -1,14 +1,13 @@
-import {Vitest} from 'vitest';
-import { debounce } from "../utilities";
+import { debounce } from '../utilities';
 
 describe('Utilities', () => {
     beforeEach(() => {
         vi.useFakeTimers();
-    })
+    });
 
     afterEach(() => {
         vi.useRealTimers();
-    })
+    });
     describe('Debounce', () => {
         it('can call a function after a given time', () => {
             const fake = vi.fn(() => {});
@@ -30,6 +29,6 @@ describe('Utilities', () => {
             // Third Call
             vi.advanceTimersByTime(300);
             expect(fake).toHaveBeenCalledOnce();
-        })
-    })
-})
+        });
+    });
+});
