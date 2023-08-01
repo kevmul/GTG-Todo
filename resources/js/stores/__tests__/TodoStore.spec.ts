@@ -1,30 +1,30 @@
-import axios from "axios";
-import { createPinia, setActivePinia } from "pinia";
-import { useTodoStore } from "../TodoStore";
+import axios from 'axios';
+import { createPinia, setActivePinia } from 'pinia';
+import { useTodoStore } from '../TodoStore';
 
-vi.mock("axios");
+vi.mock('axios');
 
 const expectedResponse = {
     data: {
         todos: [
-            { id: 1, title: "First Todo" },
-            { id: 2, title: "Second Todo" },
+            { id: 1, title: 'First Todo' },
+            { id: 2, title: 'Second Todo' },
         ],
     },
 };
 
 let store;
-describe("TodoStore", () => {
+describe('TodoStore', () => {
     beforeEach(() => {
         setActivePinia(createPinia());
         vi.useFakeTimers();
         axios.get.mockResolvedValue(expectedResponse);
         axios.post.mockResolvedValue({
             data: {
-                todo: { id: 3, title: "New Todo" },
+                todo: { id: 3, title: 'New Todo' },
             },
         });
-        axios.patch.mockResolvedValue({data: {}})
+        axios.patch.mockResolvedValue({data: {}});
     });
 
     afterEach(() => {
@@ -32,11 +32,11 @@ describe("TodoStore", () => {
         vi.resetAllMocks();
     });
 
-    describe("actions", () => {
+    describe('actions', () => {
         beforeEach(() => {
             store = useTodoStore();
         });
-        test("fetch can only be called 5 seconds after previous call", async () => {
+        test('fetch can only be called 5 seconds after previous call', async () => {
             await store.fetch();
             expect(axios.get).toBeCalledTimes(1);
 
@@ -51,13 +51,13 @@ describe("TodoStore", () => {
             expect(axios.get).toBeCalledTimes(2);
         });
 
-        it("can create a new todo and prepend to the list", async () => {
+        it('can create a new todo and prepend to the list', async () => {
             await store.fetch();
             expect(store.todos.length).toBe(2);
-            expect(store.todos[0].title).toBe("First Todo");
+            expect(store.todos[0].title).toBe('First Todo');
             await store.create();
             expect(store.todos.length).toBe(3);
-            expect(store.todos[0].title).toBe("New Todo");
+            expect(store.todos[0].title).toBe('New Todo');
         });
 
         it('can update its progress', async () => {
@@ -66,17 +66,17 @@ describe("TodoStore", () => {
 
             await store.updateProgress(1);
             vi.advanceTimersByTime(499);
-            expect(store.todos[0].progress).to.equal('in-progress')
+            expect(store.todos[0].progress).to.equal('in-progress');
 
             await store.updateProgress(1);
             vi.advanceTimersByTime(499);
-            expect(store.todos[0].progress).to.equal('complete')
+            expect(store.todos[0].progress).to.equal('complete');
 
             await store.updateProgress(1);
             vi.advanceTimersByTime(500);
-            expect(store.todos[0].progress).to.equal('new')
+            expect(store.todos[0].progress).to.equal('new');
 
-            expect(axios.patch).toHaveBeenCalledTimes(1)
-        })
+            expect(axios.patch).toHaveBeenCalledTimes(1);
+        });
     });
 });

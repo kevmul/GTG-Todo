@@ -1,11 +1,11 @@
-import { DateTime } from "luxon";
-import { defineStore } from "pinia";
-import { computed, ref, Ref } from "vue";
-import axios from "axios";
-import { Todo, TodoProgress } from "../types/todo.d";
+import { DateTime } from 'luxon';
+import { defineStore } from 'pinia';
+import { computed, ref, Ref } from 'vue';
+import axios from 'axios';
+import { Todo, TodoProgress } from '../types/todo.d';
 import { debounce } from 'lodash';
 
-export const useTodoStore = defineStore("todos", () => {
+export const useTodoStore = defineStore('todos', () => {
     const todos = <Ref<Todo[]>>ref([]);
     const lastFetch = ref(null);
 
@@ -19,14 +19,14 @@ export const useTodoStore = defineStore("todos", () => {
             !lastFetch.value ||
             lastFetch.value.plus({ seconds: 5 }).toMillis() <= now.toMillis()
         ) {
-            const response = await axios.get("todos");
+            const response = await axios.get('todos');
             todos.value = response.data.todos;
             lastFetch.value = now;
         }
     };
 
     const create = async () => {
-        const response = await axios.post("/todo");
+        const response = await axios.post('/todo');
         console.log(response);
 
         todos.value.unshift(response.data?.todo);
@@ -54,7 +54,7 @@ export const useTodoStore = defineStore("todos", () => {
         const todo = todos.value.find((todo) => todo.id === id);
         todo.meta = {archived: true};
         return response;
-    }
+    };
 
     return {
         todos,

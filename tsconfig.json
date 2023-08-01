@@ -1,5 +1,8 @@
 {
     "compilerOptions": {
-        "types": ["vitest/globals"]
+        "types": ["vitest/globals"],
+        "paths": {
+            "@/*": ["./resources/js/*"]
+        }
     }
 }

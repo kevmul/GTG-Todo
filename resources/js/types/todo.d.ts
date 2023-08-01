@@ -1,5 +1,9 @@
 // export type TodoProgress = "new" | "in-progress" | "complete";
-export enum TodoProgress { "new", "in-progress", "complete"};
+export enum TodoProgress {
+    'new',
+    'in-progress',
+    'complete',
+}
 
 export interface Todo {
     id: string;
@@ -12,12 +16,12 @@ export interface Todo {
     completed_at?: Date;
     archived_at?: Date;
     /** Add any meta data needed for UI */
-    meta?: any;
+    meta?: object;
 }
 
 export type TSubTask = {
     id: string;
-    body : string;
-    is_task : boolean;
+    body: string;
+    is_task: boolean;
     subtasks: TSubTask[];
-}
+};

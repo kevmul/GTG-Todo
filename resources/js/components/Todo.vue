@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Todo } from "../types/todo";
-import SubTask from "./SubTask.vue";
-import TodoTitle from "./TodoTitle.vue";
+import { Todo } from '../types/todo';
+import SubTask from './SubTask.vue';
+import TodoTitle from './TodoTitle.vue';
 
 const props = defineProps<{
     todo: Todo;

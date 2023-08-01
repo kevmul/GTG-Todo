@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import type { TodoProgress } from "../types/todo";
+import { computed } from 'vue';
+import type { TodoProgress } from '../types/todo';
 
 const props = defineProps<{
     isImportant: boolean;
