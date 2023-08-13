@@ -1,8 +1,10 @@
 {
     "compilerOptions": {
-        "types": ["vitest/globals"],
+        "types": ["vite/client", "vitest/globals"],
         "paths": {
             "@/*": ["./resources/js/*"]
-        }
+        },
+        "module": "ES2020",
+        "moduleResolution": "Node"
     }
 }

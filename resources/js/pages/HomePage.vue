@@ -19,7 +19,7 @@ onBeforeMount(() => {
             data-testid="todo-list-item"
         >
             <transition>
-                <Todo :todo="todo" v-if="!todo.meta?.archived"/>
+                <Todo :todo="todo" v-if="!todo.meta?.archived" />
             </transition>
         </div>
         <button
@@ -28,20 +28,7 @@ onBeforeMount(() => {
             data-testid="create-todo-btn"
             @click="todoStore.create"
         >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="{1.5}"
-                stroke="currentColor"
-                className="w-6 h-6"
-            >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
-                />
-            </svg>
+            <InlineSvg name="plus" />
         </button>
     </div>
 </template>
@@ -49,11 +36,11 @@ onBeforeMount(() => {
 <style>
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
 .v-leave-to {
-  opacity: 0;
+    opacity: 0;
 }
 </style>

@@ -1,11 +1,12 @@
 {
     "private": true,
     "scripts": {
-        "dev": "vite",
+        "dev": "yarn svg && vite",
         "build": "vite build",
         "test:spec": "vitest",
         "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore --fix resources/js",
-        "format": "prettier resources/js  --write"
+        "format": "prettier resources/js  --write",
+        "svg": "node scripts/updateSvgNames.ts"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^6.2.1",
